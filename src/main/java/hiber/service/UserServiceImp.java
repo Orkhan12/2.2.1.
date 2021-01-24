@@ -1,5 +1,6 @@
 package hiber.service;
 
+
 import hiber.dao.UserDao;
 import hiber.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,8 @@ public class UserServiceImp implements UserService {
       return userDao.listUsers();
    }
 
+   @Override
+   public List<User>  print(String model, int series) {
+      return userDao.print(model,series);
+   }
 }

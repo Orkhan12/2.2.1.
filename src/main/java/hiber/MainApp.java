@@ -10,37 +10,28 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
-   public static void main(String[] args) throws SQLException {
-      AnnotationConfigApplicationContext context = 
-            new AnnotationConfigApplicationContext(AppConfig.class);
+    public static void main(String[] args) throws SQLException {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(AppConfig.class);
 
-      UserService userService = context.getBean(UserService.class);
+        UserService userService = context.getBean(UserService.class);
 
-      Car carOne = new Car("BMW",7);
-      Car carTwo = new Car("Mercedez", 8);
-      Car carTree = new Car("Toyota", 3);
-      User userOne = new User("User1", "Lastname1", "user1@mail.ru");
-      User userTwo = new User("User2", "Lastname2", "user2@mail.ru");
-      User userThree = new User("User3", "Lastname3", "user3@mail.ru");
-      userOne.setCar(carOne);
-      userTwo.setCar(carTwo);
-      userThree.setCar(carTree);
+        userService.add(new User("User1", "Lastname1", "user1@mail.ru", new Car("BMW", 7)));
+        userService.add(new User("User2", "Lastname2", "user2@mail.ru", new Car("Mercedez", 8)));
+        userService.add(new User("User3", "Lastname3", "user3@mail.ru", new Car("Toyota", 3)));
+        userService.add(new User("User4", "Lastname4", "user4@mail.ru", new Car("Nisan", 32)));
+
+        List<User> users = userService.listUsers();
+        for (User user : users) {
+            System.out.println("Id = " + user.getId());
+            System.out.println("First Name = " + user.getFirstName());
+            System.out.println("Last Name = " + user.getLastName());
+            System.out.println("Email = " + user.getEmail());
+            System.out.println("Car = " + user.getCar() + "\n");
+
+        }
 
 
-      userService.add(userOne);
-      userService.add(userTwo);
-      userService.add(userThree);
-      userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
-
-      List<User> users = userService.listUsers();
-      for (User user : users) {
-         System.out.println("Id = "+user.getId());
-         System.out.println("First Name = "+user.getFirstName());
-         System.out.println("Last Name = "+user.getLastName());
-         System.out.println("Email = "+user.getEmail());
-         System.out.println();
-      }
-
-      context.close();
-   }
+        context.close();
+    }
 }
